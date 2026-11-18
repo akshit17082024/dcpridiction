@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="result-wrap">
+  {% if pred == 1 %}
+    <div class="result-card bad">
+      <div class="r-icon"><i class="fa fa-exclamation-triangle"></i></div>
+      <h2>Result: BAD &ndash; Infected cell</h2>
+      <p>This blood cell looks infected with malaria.</p>
+    </div>
+    <div class="result-box warn">
+      <h4>What exactly happened?</h4>
+      <p style="margin:0">The computer looked at the blood-cell image you uploaded and it <b>resembles a malaria-infected cell</b>. One cell is not a full test, so confirm with a lab.</p>
+    </div>
+    <div class="result-box">
+      <h4>What should you do now?</h4>
+      <ul><li>Get a proper malaria blood test (smear / rapid test) at a lab or doctor.</li><li>If you have fever with chills, see a doctor today.</li><li>Do not take malaria medicine without a doctor's advice.</li></ul>
+    </div>
+  {% else %}
+    <div class="result-card good">
+      <div class="r-icon"><i class="fa fa-check-circle"></i></div>
+      <h2>Result: GOOD &ndash; Cell not infected</h2>
+      <p>This blood cell looks normal.</p>
+    </div>
+    <div class="result-box">
+      <h4>What exactly happened?</h4>
+      <p style="margin:0">The computer looked at the blood-cell image you uploaded and it <b>looks like a normal cell</b>. One cell is not a full test.</p>
+    </div>
+    <div class="result-box">
+      <h4>What should you do now?</h4>
+      <ul><li>No action needed because of this result.</li><li>This checks only one cell image &ndash; if you have fever with chills, still get a blood test.</li></ul>
+    </div>
+  {% endif %}
+  <p class="result-note">This is an automatic computer screening, not a medical diagnosis. Only a doctor can confirm any disease.</p>
+  <div class="text-center mt-3"><a href="{{ url_for('home') }}" class="btn btn-mss"><i class="fa fa-home"></i> Back to Home</a></div>
+</div>
+{% endblock %}

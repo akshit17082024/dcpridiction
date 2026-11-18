@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="result-wrap">
+  {% if pred == 1 %}
+    <div class="result-card bad">
+      <div class="r-icon"><i class="fa fa-exclamation-triangle"></i></div>
+      <h2>Result: BAD &ndash; Possible Pneumonia</h2>
+      <p>The X-ray looks like a pneumonia X-ray.</p>
+    </div>
+    <div class="result-box warn">
+      <h4>What exactly happened?</h4>
+      <p style="margin:0">The computer looked at the chest X-ray you uploaded and found patterns that <b>resemble pneumonia</b>. Only a doctor can confirm it.</p>
+    </div>
+    <div class="result-box">
+      <h4>What should you do now?</h4>
+      <ul><li>Show this X-ray to a doctor or radiologist soon.</li><li>If you have fever, cough or breathing trouble, go to a doctor today.</li><li>Do not start antibiotics on your own.</li></ul>
+    </div>
+  {% else %}
+    <div class="result-card good">
+      <div class="r-icon"><i class="fa fa-check-circle"></i></div>
+      <h2>Result: GOOD &ndash; No Pneumonia seen</h2>
+      <p>The X-ray does not look like a pneumonia X-ray.</p>
+    </div>
+    <div class="result-box">
+      <h4>What exactly happened?</h4>
+      <p style="margin:0">The computer looked at the chest X-ray you uploaded and found <b>no pneumonia-like pattern</b>. This is a good sign, not a guarantee.</p>
+    </div>
+    <div class="result-box">
+      <h4>What should you do now?</h4>
+      <ul><li>No action needed because of this result.</li><li>If you still have cough, fever or breathlessness, see a doctor anyway.</li></ul>
+    </div>
+  {% endif %}
+  <p class="result-note">This is an automatic computer screening, not a medical diagnosis. Only a doctor can confirm any disease.</p>
+  <div class="text-center mt-3"><a href="{{ url_for('home') }}" class="btn btn-mss"><i class="fa fa-home"></i> Back to Home</a></div>
+</div>
+{% endblock %}

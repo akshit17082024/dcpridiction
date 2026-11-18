@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+{% from 'form_macros.html' import num, sel, yesno %}
+{% block content %}
+<div class="mss-form-wrap">
+  <div class="form-banner" style="--accent:#e11d48;">
+    <div class="fb-icon"><span class="fa fa-heartbeat"></span></div>
+    <div>
+      <h1>Heart Health Check</h1>
+      <p>Answer the questions below. Each one tells you what it means and where to find it.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <span class="fa fa-lightbulb-o"></span>&nbsp; <strong>Before you start:</strong> a few answers (ECG, treadmill / stress test, cholesterol)
+    come from medical reports. Keep your latest reports handy. If you don't have a value, please ask your doctor rather than guessing — a wrong value gives a wrong result.
+  </div>
+
+  <form class="mss-form" action="{{ url_for('predictPage') }}" method="POST">
+    <input type="hidden" name="disease" value="heart">
+
+    <div class="form-section">
+      <h5><span class="sec-num">1</span>About you</h5>
+      <div class="sec-sub">Basic details</div>
+      <div class="row">
+        <div class="col-md-6">{{ num('age', 'Your age', 'In years', 'e.g. 45', 1, 120, 1) }}</div>
+        <div class="col-md-6">{{ sel('sex', 'Gender', [('1','Male'),('0','Female')]) }}</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h5><span class="sec-num">2</span>Blood pressure, cholesterol &amp; sugar</h5>
+      <div class="sec-sub">From a BP reading and a blood test</div>
+      <div class="row">
+        <div class="col-md-6">{{ num('trestbps', 'Blood pressure (upper number)', 'While resting. In a reading like 120/80, the upper number is 120 (in mm Hg).', 'e.g. 120', 80, 220, 1) }}</div>
+        <div class="col-md-6">{{ num('chol', 'Cholesterol (total)', 'Found in a lipid profile blood test, in mg/dL. Below 200 is considered healthy.', 'e.g. 190', 100, 600, 1) }}</div>
+        <div class="col-md-12">{{ sel('fbs', 'Is your fasting blood sugar above 120 mg/dL?', [('1','Yes, above 120'),('0','No, 120 or below')], 'Fasting sugar is measured after 8 hours without food. Check your blood sugar (fasting) report.') }}</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h5><span class="sec-num">3</span>Chest pain &amp; exercise</h5>
+      <div class="sec-sub">How your heart feels and behaves during effort</div>
+      <div class="row">
+        <div class="col-md-12">{{ sel('cp', 'What kind of chest pain do you have?', [
+            ('0','No chest pain (no symptoms)'),
+            ('3','Typical angina – pressure or tightness in the chest brought on by effort or stress, relieved by rest'),
+            ('1','Atypical angina – chest pain that only partly fits the typical pattern'),
+            ('2','Non-anginal pain – chest pain that is probably not from the heart (e.g. muscle pain, acidity)')],
+            'Choose the one that describes you best.') }}</div>
+        <div class="col-md-6">{{ yesno('exang', 'Do you get chest pain while exercising?', 'For example while walking fast or climbing stairs.') }}</div>
+        <div class="col-md-6">{{ num('thalach', 'Highest heart rate reached (beats per minute)', 'Taken from a treadmill / stress test report. Pulse rate you measure at rest will not work here.', 'e.g. 150', 60, 220, 1) }}</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h5><span class="sec-num">4</span>ECG &amp; heart test reports</h5>
+      <div class="sec-sub">These are written in your ECG / stress test / angiography reports</div>
+      <div class="row">
+        <div class="col-md-12">{{ sel('restecg', 'Resting ECG result', [
+            ('1','Normal'),
+            ('2','ST-T wave abnormality (changes in the ECG wave pattern)'),
+            ('0','Left ventricular hypertrophy (thickened heart muscle)')],
+            'The result of the ECG done while you were resting.') }}</div>
+        <div class="col-md-6">{{ num('oldpeak', 'ST depression during exercise', 'A number from your stress test report. Enter 0 if it is normal or not mentioned.', 'e.g. 1.0', 0, 7, 0.1) }}</div>
+        <div class="col-md-6">{{ sel('slope', 'Direction of the ST line at peak exercise', [
+            ('2','Upsloping (rising) – usually healthy'),
+            ('1','Flat'),
+            ('0','Downsloping (falling)')],
+            'Written in the stress (treadmill) test report.') }}</div>
+        <div class="col-md-6">{{ sel('ca', 'Number of major heart vessels with narrowing', [('0','0 – none'),('1','1 vessel'),('2','2 vessels'),('3','3 vessels')],
+            'From a fluoroscopy / angiography report. Choose 0 if none were found.') }}</div>
+        <div class="col-md-6">{{ sel('thal', 'Blood-flow test to the heart (thallium stress test)', [
+            ('2','Normal'),
+            ('1','Fixed defect – permanent reduced blood flow'),
+            ('3','Reversible defect – reduced blood flow only during stress')],
+            'Result of the thallium / nuclear stress test.') }}</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-info btn-block"><span class="fa fa-heartbeat"></span>&nbsp; Check my heart health</button>
+    <div class="privacy"><span class="fa fa-lock"></span> Your answers are used only to show this result and are not saved.</div>
+  </form>
+</div>
+{% endblock %}

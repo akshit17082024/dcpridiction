@@ -1,0 +1,24 @@
+{# Small helpers so every field has: a plain-language label, the unit/example, and a short "where do I find this?" hint #}
+{% macro num(name, label, hint='', placeholder='', min=0, max=None, step='any') -%}
+<div class="form-group">
+  <label for="{{ name }}">{{ label }}</label>
+  <input class="form-control" type="number" id="{{ name }}" name="{{ name }}" required
+         placeholder="{{ placeholder }}" min="{{ min }}" {% if max is not none %}max="{{ max }}"{% endif %} step="{{ step }}" inputmode="decimal">
+  {% if hint %}<span class="hint">{{ hint }}</span>{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro sel(name, label, options, hint='') -%}
+<div class="form-group">
+  <label for="{{ name }}">{{ label }}</label>
+  <select class="form-control" id="{{ name }}" name="{{ name }}" required>
+    <option value="" selected disabled>Please choose…</option>
+    {% for value, text in options %}<option value="{{ value }}">{{ text }}</option>{% endfor %}
+  </select>
+  {% if hint %}<span class="hint">{{ hint }}</span>{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro yesno(name, label, hint='') -%}
+{{ sel(name, label, [('1','Yes'),('0','No')], hint) }}
+{%- endmacro %}

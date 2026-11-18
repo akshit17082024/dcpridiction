@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+{% from 'form_macros.html' import num, sel, yesno %}
+{% block content %}
+<div class="mss-form-wrap">
+  <div class="form-banner" style="--accent:#7c3aed;">
+    <div class="fb-icon"><span class="fa fa-filter"></span></div>
+    <div>
+      <h1>Kidney Health Check</h1>
+      <p>Simple questions in plain language. Each one tells you what it means and where to find it.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <span class="fa fa-lightbulb-o"></span>&nbsp; <strong>Before you start:</strong> this check needs values from a recent
+    <strong>blood test</strong> (often called KFT / RFT – kidney or renal function test) and a <strong>urine test</strong> (urine routine).
+    Keep both reports in front of you and copy the values. If a value is missing in your report, please ask your doctor or lab.
+  </div>
+
+  <form class="mss-form" action="{{ url_for('predictPage') }}" method="POST">
+    <input type="hidden" name="disease" value="kidney">
+
+    <div class="form-section">
+      <h5><span class="sec-num">1</span>About you</h5>
+      <div class="sec-sub">Basic details and health history</div>
+      <div class="row">
+        <div class="col-md-6">{{ num('age', 'Your age', 'In years', 'e.g. 45', 1, 120, 1) }}</div>
+        <div class="col-md-6">{{ num('bp', 'Blood pressure (lower number)', 'In a reading like 120/80, the lower number is 80 (in mm Hg).', 'e.g. 80', 40, 150, 1) }}</div>
+        <div class="col-md-6">{{ yesno('htn', 'Do you have high blood pressure?', 'Also called hypertension.') }}</div>
+        <div class="col-md-6">{{ yesno('dm', 'Do you have diabetes (sugar)?') }}</div>
+        <div class="col-md-6">{{ yesno('cad', 'Do you have a heart disease?', 'Blocked or narrowed heart arteries (coronary artery disease).') }}</div>
+        <div class="col-md-6">{{ yesno('pe', 'Is there swelling in your feet or ankles?', 'Doctors call this pedal edema.') }}</div>
+        <div class="col-md-6">{{ yesno('ane', 'Have you been told you have anaemia?', 'Low haemoglobin / low blood.') }}</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h5><span class="sec-num">2</span>Blood test report</h5>
+      <div class="sec-sub">Look for these names in your blood test (KFT / RFT) report</div>
+      <div class="row">
+        <div class="col-md-6">{{ num('bgr', 'Blood sugar (random)', 'Report name: Random blood glucose / RBS. In mg/dL. Normal is roughly 70–140.', 'e.g. 110', 20, 600, 1) }}</div>
+        <div class="col-md-6">{{ num('bu', 'Blood urea', 'Report name: Blood Urea. In mg/dL. Normal is roughly 7–25.', 'e.g. 30', 1, 400, 0.1) }}</div>
+        <div class="col-md-6">{{ num('sc', 'Serum creatinine', 'Report name: Serum Creatinine. In mg/dL. Normal is roughly 0.6–1.3.', 'e.g. 1.0', 0.1, 30, 0.1) }}</div>
+        <div class="col-md-6">{{ num('pot', 'Potassium', 'Report name: Potassium (K+). In mEq/L. Normal is roughly 3.5–5.0.', 'e.g. 4.2', 1, 12, 0.1) }}</div>
+        <div class="col-md-6">{{ num('wc', 'White blood cell count', 'Report name: WBC / TLC (total leucocyte count). In cells per cubic mm. Normal is roughly 4,000–11,000.', 'e.g. 7800', 1000, 40000, 100) }}</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h5><span class="sec-num">3</span>Urine test report</h5>
+      <div class="sec-sub">Look for these in your urine routine / urine examination report</div>
+      <div class="row">
+        <div class="col-md-6">{{ sel('al', 'Albumin (protein) in urine', [
+            ('0','Nil / Negative'),('1','Trace / +'),('2','++'),('3','+++'),('4','++++'),('5','Very high')],
+            'Report name: Albumin or Protein. Choose the grade written in your report.') }}</div>
+        <div class="col-md-6">{{ sel('su', 'Sugar in urine', [
+            ('0','Nil / Negative'),('1','Trace / +'),('2','++'),('3','+++'),('4','++++'),('5','Very high')],
+            'Report name: Sugar or Glucose. Choose the grade written in your report.') }}</div>
+        <div class="col-md-6">{{ sel('rbc', 'Red blood cells in urine', [('0','Normal'),('1','Abnormal')], 'Report name: RBC. “Normal” if nothing unusual is written.') }}</div>
+        <div class="col-md-6">{{ sel('pc', 'Pus cells in urine', [('0','Normal'),('1','Abnormal')], 'Report name: Pus cells. “Abnormal” if the count is raised.') }}</div>
+        <div class="col-md-6">{{ sel('pcc', 'Clumps of pus cells', [('0','Not present'),('1','Present')], 'Report name: Pus cell clumps.') }}</div>
+        <div class="col-md-6">{{ sel('ba', 'Bacteria in urine', [('0','Not present'),('1','Present')], 'Report name: Bacteria.') }}</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-info btn-block"><span class="fa fa-filter"></span>&nbsp; Check my kidney health</button>
+    <div class="privacy"><span class="fa fa-lock"></span> Your answers are used only to show this result and are not saved.</div>
+  </form>
+</div>
+{% endblock %}

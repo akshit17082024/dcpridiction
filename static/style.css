@@ -1,0 +1,178 @@
+/* ===== My Sehat Sakhi – shared theme =====
+   Palette comes from the logo (teal -> green) : calm, clinical, trustworthy. */
+:root{
+  --mss-deep:#064e4b;      /* dark teal  (navbar / footer) */
+  --mss-teal:#0f766e;      /* main brand */
+  --mss-teal-light:#14b8a6;
+  --mss-green:#22c55e;
+  --mss-mint:#ecfdf5;      /* page background */
+  --mss-ink:#0f2a2a;       /* body text */
+  --mss-muted:#5b7474;
+}
+
+html, body{ font-family:'Poppins','Segoe UI',system-ui,-apple-system,sans-serif; color:var(--mss-ink); }
+body{ background:linear-gradient(180deg,#ecfdf5 0%,#f0fdfa 45%,#ffffff 100%) fixed; }
+main{ padding-top:92px; }          /* room for the fixed navbar */
+
+/* ---------- Navbar ---------- */
+.navbar.fixed-top{
+  background:linear-gradient(90deg,var(--mss-deep),var(--mss-teal)) !important;
+  box-shadow:0 4px 18px rgba(6,78,75,.35);
+}
+.navbar-dark .navbar-nav .nav-link{
+  color:#d9fbf3; font-weight:500; border-radius:999px;
+  padding:.45rem .95rem; margin:0 2px; transition:all .2s ease;
+}
+.navbar-dark .navbar-nav .nav-link:hover{ background:rgba(255,255,255,.16); color:#fff; }
+.navbar-dark .navbar-nav .nav-link.current{
+  background:linear-gradient(135deg,var(--mss-teal-light),var(--mss-green)); color:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+}
+
+/* ---------- Footer ---------- */
+footer{ background:var(--mss-deep) !important; height:auto !important; }
+footer a{ transition:opacity .2s; } footer a:hover{ opacity:.8; text-decoration:none; }
+
+/* ---------- Buttons (used on every page) ---------- */
+.btn-mss, .btn-info, .btn-primary{
+  background:linear-gradient(135deg,var(--mss-teal) 0%,var(--mss-green) 100%) !important;
+  border:none !important; color:#fff !important; font-weight:600; letter-spacing:.3px;
+  border-radius:999px; padding:.65rem 1.6rem;
+  box-shadow:0 6px 16px rgba(15,118,110,.35);
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.btn-mss:hover, .btn-info:hover, .btn-primary:hover{
+  transform:translateY(-2px); filter:brightness(1.07);
+  box-shadow:0 10px 22px rgba(15,118,110,.45); color:#fff !important; text-decoration:none;
+}
+.btn-mss:active, .btn-info:active, .btn-primary:active{ transform:translateY(0); }
+.btn-mss-outline{
+  background:rgba(255,255,255,.12); color:#fff; border:2px solid rgba(255,255,255,.85);
+  font-weight:600; border-radius:999px; padding:.6rem 1.5rem; transition:all .18s ease;
+}
+.btn-mss-outline:hover{ background:#fff; color:var(--mss-teal); text-decoration:none; transform:translateY(-2px); }
+
+/* ---------- Generic cards / alerts / inputs on the other pages ---------- */
+.card.card-body{ border-radius:18px; box-shadow:0 8px 28px rgba(15,118,110,.12); }
+.form-control{ border-radius:12px !important; border:1px solid #b6d9d3 !important; padding:1.4rem .9rem; }
+.form-control:focus{ border-color:var(--mss-teal-light) !important; box-shadow:0 0 0 .2rem rgba(20,184,166,.25); }
+.alert{ border-radius:14px; border:none; box-shadow:0 4px 14px rgba(0,0,0,.08); }
+
+/* ---------- Home page ---------- */
+.hero{
+  position:relative; overflow:hidden; color:#fff; border-radius:28px; padding:3.5rem 2.5rem;
+  background:linear-gradient(135deg,#064e4b 0%,#0f766e 55%,#16a34a 120%);
+  box-shadow:0 18px 40px rgba(6,78,75,.35);
+}
+.hero::before,.hero::after{ content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,.07); }
+.hero::before{ width:340px; height:340px; right:-90px; top:-120px; }
+.hero::after{ width:220px; height:220px; left:-60px; bottom:-100px; }
+.hero > *{ position:relative; z-index:1; }
+.hero .eyebrow{ letter-spacing:3px; font-size:.8rem; text-transform:uppercase; color:#a7f3d0; font-weight:600; }
+.hero h1{ font-weight:700; font-size:2.6rem; line-height:1.15; margin:.5rem 0 1rem; }
+.hero h1 span{ color:#86efac; }
+.hero p.lead{ color:#d1fae5; font-size:1.05rem; max-width:560px; }
+.hero .btn{ margin:.35rem .5rem .35rem 0; }
+.hero-panel{
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(6px); border-radius:22px; padding:1.4rem 1.6rem; text-align:center;
+}
+.hero-panel .pulse{ font-size:3.2rem; color:#86efac; animation:beat 1.6s ease-in-out infinite; }
+@keyframes beat{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+.hero-stat{ display:flex; justify-content:space-around; margin-top:1rem; }
+.hero-stat div{ font-size:.78rem; color:#d1fae5; }
+.hero-stat strong{ display:block; font-size:1.5rem; color:#fff; }
+
+.section-title{ text-align:center; margin:3rem 0 .4rem; font-weight:700; color:var(--mss-deep); }
+.section-sub{ text-align:center; color:var(--mss-muted); margin-bottom:2rem; }
+
+/* disease cards – every card carries its own accent colour via --accent */
+.d-card{
+  --accent:#0f766e; background:#fff; border-radius:22px; height:100%;
+  border-top:6px solid var(--accent); padding:1.5rem 1.4rem 1.3rem;
+  box-shadow:0 8px 26px rgba(15,42,42,.09); display:flex; flex-direction:column;
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+.d-card:hover{ transform:translateY(-6px); box-shadow:0 16px 36px rgba(15,42,42,.16); }
+.d-icon{
+  width:58px; height:58px; border-radius:16px; display:flex; align-items:center; justify-content:center;
+  font-size:1.7rem; color:#fff; background:var(--accent); margin-bottom:.9rem;
+  box-shadow:0 8px 16px rgba(0,0,0,.18);
+}
+.d-card h4{ font-weight:700; font-size:1.2rem; margin-bottom:.15rem; }
+.d-tag{ font-size:.78rem; color:var(--mss-muted); margin-bottom:.9rem; }
+.acc-row{ display:flex; justify-content:space-between; font-size:.8rem; font-weight:600; color:var(--mss-muted); }
+.acc-row b{ color:var(--accent); }
+.acc-bar{ height:8px; border-radius:99px; background:#e5eceb; overflow:hidden; margin:.3rem 0 1rem; }
+.acc-bar i{ display:block; height:100%; border-radius:99px; background:var(--accent); }
+.d-card details{ font-size:.86rem; color:#344; margin-bottom:1rem; }
+.d-card summary{ cursor:pointer; font-weight:600; color:var(--accent); outline:none; }
+.d-card details p{ margin:.6rem 0; line-height:1.55; }
+.d-card details ul{ padding-left:1.1rem; margin:0; }
+.d-card .btn-card{
+  margin-top:auto; background:var(--accent); color:#fff; font-weight:600; border-radius:999px;
+  padding:.6rem 1rem; text-align:center; box-shadow:0 6px 14px rgba(0,0,0,.18);
+  transition:transform .18s ease, filter .18s ease;
+}
+.d-card .btn-card:hover{ color:#fff; text-decoration:none; transform:translateY(-2px); filter:brightness(1.1); }
+
+/* how it works */
+.step{ text-align:center; padding:1rem; }
+.step .num{
+  width:54px; height:54px; border-radius:50%; margin:0 auto .8rem; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:1.3rem; color:#fff; background:linear-gradient(135deg,var(--mss-teal),var(--mss-green));
+  box-shadow:0 8px 18px rgba(15,118,110,.35);
+}
+.step h5{ font-weight:600; } .step p{ color:var(--mss-muted); font-size:.9rem; }
+
+.disclaimer{
+  background:#fffbeb; border-left:5px solid #f59e0b; border-radius:14px; padding:1rem 1.3rem;
+  color:#78490c; font-size:.88rem; margin:2.5rem 0 1rem;
+}
+@media (max-width:768px){ .hero{ padding:2.2rem 1.4rem; } .hero h1{ font-size:2rem; } }
+
+/* ---------- Easy-to-fill health forms (heart, kidney) ---------- */
+.mss-form-wrap{ max-width:900px; margin:0 auto 40px; }
+.form-banner{
+  --accent:#0f766e; display:flex; align-items:center; gap:1rem; color:#fff; border-radius:22px;
+  padding:1.3rem 1.6rem; margin-bottom:1.2rem;
+  background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#000));
+  box-shadow:0 12px 28px rgba(0,0,0,.2);
+}
+.form-banner .fb-icon{ font-size:2.2rem; width:62px; height:62px; border-radius:18px; background:rgba(255,255,255,.18);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.form-banner h1{ font-size:1.7rem; font-weight:700; margin:0; }
+.form-banner p{ margin:.2rem 0 0; color:rgba(255,255,255,.88); font-size:.92rem; }
+.tip-box{
+  background:#f0fdfa; border-left:5px solid var(--mss-teal-light); border-radius:14px;
+  padding:.9rem 1.2rem; font-size:.9rem; color:#134e4a; margin-bottom:1.2rem;
+}
+.mss-form .form-section{ background:#fff; border-radius:20px; padding:1.4rem 1.5rem .6rem; margin-bottom:1.2rem;
+  box-shadow:0 8px 24px rgba(15,42,42,.08); }
+.mss-form .form-section h5{ font-weight:700; color:var(--mss-deep); margin-bottom:.15rem; }
+.mss-form .form-section .sec-sub{ color:var(--mss-muted); font-size:.85rem; margin-bottom:1rem; }
+.mss-form .sec-num{ display:inline-flex; width:28px; height:28px; border-radius:50%; align-items:center; justify-content:center;
+  background:var(--mss-teal); color:#fff; font-size:.85rem; margin-right:.5rem; }
+.mss-form label{ font-weight:600; font-size:.92rem; margin-bottom:.2rem; color:var(--mss-ink); }
+.mss-form .form-control{ padding:.55rem .85rem !important; height:calc(1.5em + 1.1rem + 2px); }
+.mss-form select.form-control{ cursor:pointer; }
+.mss-form .hint{ display:block; font-size:.78rem; color:var(--mss-muted); margin-top:.25rem; line-height:1.35; }
+.mss-form .form-group{ margin-bottom:1.15rem; }
+.mss-form .btn-block{ font-size:1.05rem; padding:.85rem; }
+.mss-form .privacy{ text-align:center; color:var(--mss-muted); font-size:.8rem; margin-top:.8rem; }
+@media (max-width:576px){ .form-banner{ flex-direction:column; text-align:center; } }
+
+/* ---------- result pages ---------- */
+.result-wrap{max-width:720px;margin:30px auto 60px;padding:0 12px}
+.result-card{border-radius:18px;padding:28px 26px;color:#fff;text-align:center;box-shadow:0 10px 30px rgba(6,78,75,.18)}
+.result-card.bad{background:linear-gradient(135deg,#b91c1c,#ef4444)}
+.result-card.good{background:linear-gradient(135deg,#0f766e,#22c55e)}
+.result-card .r-icon{font-size:54px;line-height:1}
+.result-card h2{font-weight:700;margin:10px 0 6px;font-size:1.7rem}
+.result-card p{margin:0;font-size:1.05rem;opacity:.95}
+.result-box{background:#fff;border-radius:14px;padding:20px 22px;margin-top:18px;box-shadow:0 4px 16px rgba(6,78,75,.08);border-left:6px solid var(--mss-teal,#0f766e)}
+.result-box.warn{border-left-color:#f59e0b}
+.result-box h4{font-size:1.1rem;font-weight:700;color:#064e4b;margin-bottom:10px}
+.result-box ul{margin:0;padding-left:20px}
+.result-box li{margin-bottom:6px}
+.result-note{font-size:.85rem;color:#555;margin-top:16px;text-align:center}

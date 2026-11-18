@@ -1,0 +1,95 @@
+{% extends 'main.html' %}
+{% block content %}
+{# one entry per disease – colour follows the condition (blood=blue, heart=red, liver=amber, ...) #}
+{% set diseases = [
+  {'name':'Diabetes','endpoint':'diabetesPage','icon':'fa-tint','color':'#2563eb','acc':98.25,'tag':'Blood sugar check · 8 health values',
+   'about':'Diabetes is a disease that occurs when your blood glucose, also called blood sugar, is too high. Blood glucose is your main source of energy and comes from the food you eat. Insulin, a hormone made by the pancreas, helps glucose from food get into your cells to be used for energy. Sometimes your body doesn’t make enough—or any—insulin or doesn’t use insulin well. Glucose then stays in your blood and doesn’t reach your cells.',
+   'symptoms':['Urinating often.','Feeling very thirsty.','Extreme fatigue.','Blurry vision.']},
+  {'name':'Heart Disease','endpoint':'heartPage','icon':'fa-heartbeat','color':'#e11d48','acc':85.25,'tag':'Cardiac risk · 13 health values',
+   'about':'','symptoms':[]},
+  {'name':'Kidney Disease','endpoint':'kidneyPage','icon':'fa-filter','color':'#7c3aed','acc':99,'tag':'Chronic kidney disease · 18 health values',
+   'about':'Chronic kidney disease, also called chronic kidney failure, describes the gradual loss of kidney function. Your kidneys filter wastes and excess fluids from your blood, which are then excreted in your urine. When chronic kidney disease reaches an advanced stage, dangerous levels of fluid, electrolytes and wastes can build up in your body.',
+   'symptoms':['Nausea','Vomiting','Fatigue and weakness','Muscle twitches and cramps']},
+  {'name':'Liver Disease','endpoint':'liverPage','icon':'fa-medkit','color':'#d97706','acc':78,'tag':'Liver function · 10 health values',
+   'about':'Symptoms of liver disease can vary, but they often include swelling of the abdomen and legs, bruising easily, changes in the color of your stool and urine, and jaundice, or yellowing of the skin and eyes. Sometimes there are no symptoms. Tests such as imaging tests and liver function tests can check for liver damage and help to diagnose liver diseases.',
+   'symptoms':[]},
+  {'name':'Malaria','endpoint':'malariaPage','icon':'fa-bug','color':'#16a34a','acc':96,'tag':'Blood-cell image analysis · upload an image',
+   'about':'Malaria is a mosquito-borne infectious disease that affects humans and other animals. Malaria causes symptoms that typically include fever, tiredness, vomiting, and headaches. In severe cases it can cause yellow skin, seizures, coma, or death. Symptoms usually begin ten to fifteen days after being bitten by an infected mosquito. If not properly treated, people may have recurrences of the disease months later.',
+   'symptoms':['Fever. This is the most common symptom.','Chills','Headache','Nausea and vomiting']},
+  {'name':'Pneumonia','endpoint':'pneumoniaPage','icon':'fa-stethoscope','color':'#0891b2','acc':95,'tag':'Chest X-ray analysis · upload an image',
+   'about':'Pneumonia is an infection that inflames the air sacs in one or both lungs. The air sacs may fill with fluid or pus (purulent material), causing cough with phlegm or pus, fever, chills, and difficulty breathing. A variety of organisms, including bacteria, viruses and fungi, can cause pneumonia.',
+   'symptoms':['Cough, which may produce greenish, yellow or even bloody mucus.','Fever, sweating and shaking chills.','Shortness of breath.','Rapid, shallow breathing.']}
+] %}
+
+<div class="container">
+  {% if message %}
+    <div class="alert alert-danger">{{ message }}</div>
+  {% endif %}
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <div class="eyebrow">AI powered health screening</div>
+        <h1>Your friendly <span>health companion</span>,<br>just a click away.</h1>
+        <p class="lead">My Sehat Sakhi uses Machine Learning and Deep Learning models, trained on large datasets and thousands of images, to give you a quick check for 6 common conditions.</p>
+        <a href="#checks" class="btn btn-mss btn-lg"><span class="fa fa-stethoscope"></span>&nbsp; Start a health check</a>
+        <a href="#how" class="btn btn-mss-outline btn-lg">How it works</a>
+      </div>
+      <div class="col-lg-5 mt-4 mt-lg-0">
+        <div class="hero-panel">
+          <div class="pulse"><span class="fa fa-heartbeat"></span></div>
+          <h5 class="mt-2 mb-0">Know early. Act early.</h5>
+          <div class="hero-stat">
+            <div><strong>6</strong>health checks</div>
+            <div><strong>ML + DL</strong>smart models</div>
+            <div><strong>Instant</strong>results</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Disease cards ===== -->
+  <h2 class="section-title" id="checks">Choose a health check</h2>
+  <p class="section-sub">Pick a condition to open its predictor. Model accuracy is shown on each card.</p>
+
+  <div class="row">
+    {% for d in diseases %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="d-card" style="--accent: {{ d.color }};">
+        <div class="d-icon"><span class="fa {{ d.icon }}"></span></div>
+        <h4>{{ d.name }}</h4>
+        <div class="d-tag">{{ d.tag }}</div>
+        <div class="acc-row"><span>Model accuracy</span><b>{{ d.acc }}%</b></div>
+        <div class="acc-bar"><i style="width: {{ d.acc }}%;"></i></div>
+        {% if d.about %}
+        <details>
+          <summary>About &amp; symptoms</summary>
+          <p>{{ d.about }}</p>
+          {% if d.symptoms %}
+          <strong>Symptoms</strong>
+          <ul>{% for s in d.symptoms %}<li>{{ s }}</li>{% endfor %}</ul>
+          {% endif %}
+        </details>
+        {% endif %}
+        <a href="{{ url_for(d.endpoint) }}" class="btn-card">Check now &nbsp;<span class="fa fa-arrow-right"></span></a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- ===== How it works ===== -->
+  <h2 class="section-title" id="how">How it works</h2>
+  <p class="section-sub">Three simple steps</p>
+  <div class="row mb-3">
+    <div class="col-md-4 step"><div class="num">1</div><h5>Pick a check</h5><p>Choose the condition you want to screen for.</p></div>
+    <div class="col-md-4 step"><div class="num">2</div><h5>Share details</h5><p>Enter your health values, or upload a blood-cell / chest X-ray image.</p></div>
+    <div class="col-md-4 step"><div class="num">3</div><h5>Get your result</h5><p>Our trained model analyses it and shows the result in seconds.</p></div>
+  </div>
+
+  <div class="disclaimer">
+    <span class="fa fa-info-circle"></span>&nbsp; <strong>Please note:</strong> This tool is for awareness and early screening only. It is not a medical diagnosis. Always consult a qualified doctor for advice about your health.
+  </div>
+</div>
+{% endblock %}

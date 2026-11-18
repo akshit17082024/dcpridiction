@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% from 'form_macros.html' import num, sel, yesno %}
+{% block content %}
+<div class="mss-form-wrap">
+  <div class="form-banner" style="--accent:#d97706;">
+    <div class="fb-icon"><span class="fa fa-medkit"></span></div>
+    <div>
+      <h1>Liver Health Check</h1>
+      <p>Simple questions in plain language. Each one tells you what it means and where to find it.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <span class="fa fa-lightbulb-o"></span>&nbsp; <strong>Before you start:</strong> this check uses values from a recent blood test called
+    <strong>LFT (Liver Function Test)</strong>. Keep the report in front of you and copy the numbers. Your lab prints its own normal range next to each result —
+    the “normal” values shown below are only a rough guide. If a value is missing in your report, please ask your doctor or lab.
+  </div>
+
+  <form class="mss-form" action="{{ url_for('predictPage') }}" method="POST">
+    <input type="hidden" name="disease" value="liver">
+
+    <div class="form-section">
+      <h5><span class="sec-num">1</span>About you</h5>
+      <div class="sec-sub">Basic details</div>
+      <div class="row">
+        <div class="col-md-6">{{ num('Age', 'Your age', 'In years', 'e.g. 45', 1, 120, 1) }}</div>
+        <div class="col-md-6">{{ sel('Gender_Male', 'Gender', [('1','Male'),('0','Female')]) }}</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h5><span class="sec-num">2</span>Bilirubin</h5>
+      <div class="sec-sub">The yellow substance that builds up when the liver is not working well (it causes jaundice)</div>
+      <div class="row">
+        <div class="col-md-6">{{ num('Total_Bilirubin', 'Total bilirubin', 'Report name: Bilirubin Total. In mg/dL. Normal is roughly 0.1–1.2.', 'e.g. 0.8', 0, 80, 0.1) }}</div>
+        <div class="col-md-6">{{ num('Direct_Bilirubin', 'Direct bilirubin', 'Report name: Bilirubin Direct (or Conjugated). In mg/dL. Normal is roughly up to 0.3.', 'e.g. 0.2', 0, 30, 0.1) }}</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h5><span class="sec-num">3</span>Liver enzymes</h5>
+      <div class="sec-sub">These rise when liver cells are irritated or damaged</div>
+      <div class="row">
+        <div class="col-md-12">{{ num('Alkaline_Phosphotase', 'ALP (Alkaline phosphatase)', 'Report name: ALP or Alkaline Phosphatase. In IU/L (or U/L). Normal is roughly 44–147.', 'e.g. 100', 1, 2500, 1) }}</div>
+        <div class="col-md-6">{{ num('Alamine_Aminotransferase', 'ALT (also called SGPT)', 'Report name: ALT or SGPT. In U/L. Normal is roughly 7–56.', 'e.g. 30', 1, 3000, 1) }}</div>
+        <div class="col-md-6">{{ num('Aspartate_Aminotransferase', 'AST (also called SGOT)', 'Report name: AST or SGOT. In U/L. Normal is roughly 10–40.', 'e.g. 28', 1, 5000, 1) }}</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h5><span class="sec-num">4</span>Proteins</h5>
+      <div class="sec-sub">Proteins in your blood that the liver makes</div>
+      <div class="row">
+        <div class="col-md-6">{{ num('Total_Protiens', 'Total protein', 'Report name: Protein Total. In g/dL. Normal is roughly 6.0–8.3.', 'e.g. 7.0', 1, 12, 0.1) }}</div>
+        <div class="col-md-6">{{ num('Albumin', 'Albumin', 'Report name: Albumin. In g/dL. Normal is roughly 3.5–5.0.', 'e.g. 4.0', 0.5, 7, 0.1) }}</div>
+        <div class="col-md-12">{{ num('Albumin_and_Globulin_Ratio', 'Albumin / Globulin ratio (A/G ratio)', 'Report name: A/G Ratio. Normal is roughly 1.0–2.2. Not in your report? Work it out: Albumin ÷ (Total protein − Albumin).', 'e.g. 1.2', 0.1, 4, 0.01) }}</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-info btn-block"><span class="fa fa-medkit"></span>&nbsp; Check my liver health</button>
+    <div class="privacy"><span class="fa fa-lock"></span> Your answers are used only to show this result and are not saved.</div>
+  </form>
+</div>
+{% endblock %}

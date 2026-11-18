@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="result-wrap">
+  {% if pred == 1 %}
+    <div class="result-card bad">
+      <div class="r-icon"><i class="fa fa-exclamation-triangle"></i></div>
+      <h2>Result: BAD &ndash; Please see a doctor</h2>
+      <p>Your values look risky for {{ disease_name }}.</p>
+    </div>
+    <div class="result-box warn">
+      <h4>What exactly happened?</h4>
+      <p style="margin:0">The computer compared the values you entered with records of many patients. Your values are <b>similar to people who had {{ disease_name }}</b>. This does <b>not</b> mean you definitely have it &ndash; it only means a doctor should check you.</p>
+    </div>
+    <div class="result-box">
+      <h4>What should you do now?</h4>
+      <ul><li>Take these numbers and your medical reports to a doctor soon.</li><li>Ask the doctor to do proper tests to confirm or rule out {{ disease_name }}.</li><li>Do not panic and do not start any medicine on your own.</li><li>Check once that every value you typed is correct &ndash; a wrong number gives a wrong result.</li></ul>
+    </div>
+  {% else %}
+    <div class="result-card good">
+      <div class="r-icon"><i class="fa fa-check-circle"></i></div>
+      <h2>Result: GOOD &ndash; Looks healthy</h2>
+      <p>Your values do not look risky for {{ disease_name }}.</p>
+    </div>
+    <div class="result-box">
+      <h4>What exactly happened?</h4>
+      <p style="margin:0">The computer compared the values you entered with records of many patients. Your values are <b>closer to healthy people</b> than to people with {{ disease_name }}. This is a good sign, but it is not a guarantee.</p>
+    </div>
+    <div class="result-box">
+      <h4>What should you do now?</h4>
+      <ul><li>No action is needed because of this result.</li><li>Keep a healthy lifestyle: balanced food, exercise, enough sleep, regular check-ups.</li><li>If you still have symptoms or worry, visit a doctor anyway &ndash; this tool can miss things.</li></ul>
+    </div>
+  {% endif %}
+  <p class="result-note">This is an automatic computer screening, not a medical diagnosis. Only a doctor can confirm any disease.</p>
+  <div class="text-center mt-3"><a href="{{ url_for('home') }}" class="btn btn-mss"><i class="fa fa-home"></i> Back to Home</a></div>
+</div>
+{% endblock %}
